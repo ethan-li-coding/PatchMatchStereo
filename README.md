@@ -23,7 +23,7 @@ PatchMatchStereo双目立体匹配算法完整实现，代码规范，注释丰�
 <table>
   
 # CSDN博客
-[【码上教学】【立体匹配系列】经典PatchMatch: （1）框架](https://ethanli.blog.csdn.net/article/details/107192399)
+[【码上实战】【立体匹配系列】经典PatchMatch: （1）框架](https://ethanli.blog.csdn.net/article/details/107192399)
 <br>[【码上实战】【立体匹配系列】经典PatchMatch: （2）主类](https://blog.csdn.net/rs_lys/article/details/107251788)
 
 # 环境
