@@ -95,10 +95,11 @@ void PMSPropagation::ComputeCostData() const
 		!rand_disp_ || !rand_norm_) {
 		return;
 	}
+	auto* cost_cpt = dynamic_cast<CostComputerPMS*>(cost_cpt_left_);
 	for (sint32 y = 0; y < height_; y++) {
 		for (sint32 x = 0; x < width_; x++) {
 			const auto& plane_p = plane_left_[y * width_ + x];
-			cost_left_[y * width_ + x] = cost_cpt_left_->ComputeA(x, y, plane_p);
+			cost_left_[y * width_ + x] = cost_cpt->ComputeA(x, y, plane_p);
 		}
 	}
 }
@@ -115,13 +116,14 @@ void PMSPropagation::SpatialPropagation(const sint32& x, const sint32& y, const 
 	// 获取p当前的视差平面并计算代价
 	auto& plane_p = plane_left_[y * width_ + x];
 	auto& cost_p = cost_left_[y * width_ + x];
+	auto* cost_cpt = dynamic_cast<CostComputerPMS*>(cost_cpt_left_);
 
 	// 获取p左(右)侧像素的视差平面，计算将平面分配给p时的代价，取较小值
 	const sint32 xd = x - dir;
 	if (xd >= 0 && xd < width_) {
 		auto& plane = plane_left_[y * width_ + xd];
 		if (plane != plane_p) {
-			const auto cost = cost_cpt_left_->ComputeA(x, y, plane);
+			const auto cost = cost_cpt->ComputeA(x, y, plane);
 			if (cost < cost_p) {
 				plane_p = plane;
 				cost_p = cost;
@@ -134,7 +136,7 @@ void PMSPropagation::SpatialPropagation(const sint32& x, const sint32& y, const 
 	if (yd >= 0 && yd < height_) {
 		auto& plane = plane_left_[yd * width_ + x];
 		if (plane != plane_p) {
-			const auto cost = cost_cpt_left_->ComputeA(x, y, plane);
+			const auto cost = cost_cpt->ComputeA(x, y, plane);
 			if (cost < cost_p) {
 				plane_p = plane;
 				cost_p = cost;
@@ -152,6 +154,7 @@ void PMSPropagation::ViewPropagation(const sint32& x, const sint32& y) const
 	// 左视图匹配点p的位置及其视差平面 
 	const sint32 p = y * width_ + x;
 	const auto& plane_p = plane_left_[p];
+	auto* cost_cpt = dynamic_cast<CostComputerPMS*>(cost_cpt_right_);
 
 	const float32 d_p = plane_p.to_disparity(x, y);
 
@@ -168,7 +171,7 @@ void PMSPropagation::ViewPropagation(const sint32& x, const sint32& y) const
 	// 将左视图的视差平面转换到右视图
 	const auto plane_p2q = plane_p.to_another_view(x, y);
 	const float32 d_q = plane_p2q.to_disparity(xr,y);
-	const auto cost = cost_cpt_right_->ComputeA(xr, y, plane_p2q);
+	const auto cost = cost_cpt->ComputeA(xr, y, plane_p2q);
 	if (cost < cost_q) {
 		plane_q = plane_p2q;
 		cost_q = cost;
@@ -191,6 +194,8 @@ void PMSPropagation::PlaneRefine(const sint32& x, const sint32& y) const
 	// 像素p的平面、代价、视差、法线
 	auto& plane_p = plane_left_[y * width_ + x];
 	auto& cost_p = cost_left_[y * width_ + x];
+	auto* cost_cpt = dynamic_cast<CostComputerPMS*>(cost_cpt_left_);
+
 	float32 d_p = plane_p.to_disparity(x, y);
 	PVector3f norm_p = plane_p.to_normal();
 
@@ -239,7 +244,7 @@ void PMSPropagation::PlaneRefine(const sint32& x, const sint32& y) const
 
 		// 比较Cost
 		if (plane_new != plane_p) {
-			const float32 cost = cost_cpt_left_->ComputeA(x, y, plane_new);
+			const float32 cost = cost_cpt->ComputeA(x, y, plane_new);
 
 			if (cost < cost_p) {
 				plane_p = plane_new;

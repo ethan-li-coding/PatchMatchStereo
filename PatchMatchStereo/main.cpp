@@ -18,9 +18,12 @@ using namespace std::chrono;
 #pragma comment(lib,"opencv_world310.lib")
 #endif
 
+/*显示视差图*/
 void ShowDisparityMap(const float32* disp_map, const sint32& width, const sint32& height, const std::string& name);
-
+/*保存视差图*/
 void SaveDisparityMap(const float32* disp_map, const sint32& width, const sint32& height, const std::string& path);
+/*保存视差点云*/
+void SaveDisparityCloud(const uint8* img_bytes, const float32* disp_map, const sint32& width, const sint32& height, const std::string& path);
 
 /**
 * \brief
@@ -61,8 +64,8 @@ int main(int argv, char** argc)
 	const sint32 height = static_cast<uint32>(img_right.rows);
 
 	// 左右影像的彩色数据
-	auto bytes_left = new unsigned char[width * height * 3];
-	auto bytes_right = new unsigned char[width * height * 3];
+	auto bytes_left = new uint8[width * height * 3];
+	auto bytes_right = new uint8[width * height * 3];
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			bytes_left[i * 3 * width + 3 * j] = img_left.at<cv::Vec3b>(i, j)[0];
@@ -156,10 +159,15 @@ int main(int argv, char** argc)
 #endif
 
 	//···············································································//
+	// 显示视差图
 	ShowDisparityMap(pms.GetDisparityMap(0), width, height, "disp-left");
 	ShowDisparityMap(pms.GetDisparityMap(1), width, height, "disp-right");
+	// 保存视差图
 	SaveDisparityMap(pms.GetDisparityMap(0), width, height, path_left);
 	SaveDisparityMap(pms.GetDisparityMap(1), width, height, path_right);
+	// 保存视差点云
+	SaveDisparityCloud(bytes_left, pms.GetDisparityMap(0), width, height, path_left);
+	SaveDisparityCloud(bytes_right, pms.GetDisparityMap(1), width, height, path_left);
 
 	cv::waitKey(0);
 
@@ -239,4 +247,24 @@ void SaveDisparityMap(const float32* disp_map, const sint32& width, const sint32
 	cv::Mat disp_color;
 	applyColorMap(disp_mat, disp_color, cv::COLORMAP_JET);
 	cv::imwrite(path + "-c.png", disp_color);
+}
+
+void SaveDisparityCloud(const uint8* img_bytes, const float32* disp_map, const sint32& width, const sint32& height, const std::string& path)
+{
+	// 保存视差点云(x,y,disp,r,g,b)
+	FILE* fp_disp_cloud = nullptr;
+	fopen_s(&fp_disp_cloud, (path + "-cloud.txt").c_str(), "w");
+	if (fp_disp_cloud) {
+		for (sint32 i = 0; i < height; i++) {
+			for (sint32 j = 0; j < width; j++) {
+				const float32 disp = abs(disp_map[i * width + j]);
+				if (disp == Invalid_Float) {
+					continue;
+				}
+				fprintf_s(fp_disp_cloud, "%f %f %f %d %d %d\n", float32(j), float32(i),
+					disp, img_bytes[i * width * 3 + 3 * j + 2], img_bytes[i * width * 3 + 3 * j + 1], img_bytes[i * width * 3 + 3 * j]);
+			}
+		}
+		fclose(fp_disp_cloud);
+	}
 }

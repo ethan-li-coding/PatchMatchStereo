@@ -57,8 +57,8 @@ private:
 	void PlaneRefine(const sint32& x, const sint32& y) const;
 private:
 	/** \brief 代价计算器 */
-	CostComputerPMS* cost_cpt_left_;
-	CostComputerPMS* cost_cpt_right_;
+	CostComputer* cost_cpt_left_;
+	CostComputer* cost_cpt_right_;
 
 	/** \brief PMS算法参数*/
 	PMSOption option_;

@@ -21,9 +21,18 @@ namespace pms_util
 	*/
 	PColor GetColor(const uint8* img_data, const sint32& width, const sint32& height, const sint32& i,const sint32& j);
 
+	/**
+	 * \brief 中值滤波
+	 * \param in				输入，源数据
+	 * \param out				输出，目标数据
+	 * \param width				输入，宽度
+	 * \param height			输入，高度
+	 * \param wnd_size			输入，窗口宽度
+	 */
+	void MedianFilter(const float32* in, float32* out, const sint32& width, const sint32& height, const sint32 wnd_size);
 
 	/**
-	 * \brief 对视差图进行加权中值滤波
+	 * \brief 加权中值滤波
 	 * \param img_data		颜色数组
 	 * \param width			影像宽
 	 * \param height		影像高

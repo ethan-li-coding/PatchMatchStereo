@@ -15,6 +15,44 @@ PColor pms_util::GetColor(const uint8* img_data, const sint32& width, const sint
 	return {pixel[0], pixel[1], pixel[2]};
 }
 
+void pms_util::MedianFilter(const float32* in, float32* out, const sint32& width, const sint32& height,
+	const sint32 wnd_size)
+{
+	const sint32 radius = wnd_size / 2;
+	const sint32 size = wnd_size * wnd_size;
+
+	// 存储局部窗口内的数据
+	std::vector<float32> wnd_data;
+	wnd_data.reserve(size);
+
+	for (sint32 y = 0; y < height; y++) {
+		for (sint32 x = 0; x < width; x++) {
+			wnd_data.clear();
+
+			// 获取局部窗口数据
+			for (sint32 r = -radius; r <= radius; r++) {
+				for (sint32 c = -radius; c <= radius; c++) {
+					const sint32 row = y + r;
+					const sint32 col = x + c;
+					if (row >= 0 && row < height && col >= 0 && col < width) {
+						if (in[row * width + col] != Invalid_Float) {
+							wnd_data.push_back(in[row * width + col]);
+						}
+					}
+				}
+			}
+
+			// 排序
+			std::sort(wnd_data.begin(), wnd_data.end());
+
+			if (!wnd_data.empty()) {
+				// 取中值
+				out[y * width + x] = wnd_data[wnd_data.size() / 2];
+			}
+		}
+	}
+}
+
 
 void pms_util::WeightedMedianFilter(const uint8* img_data, const sint32& width, const sint32& height, const sint32& wnd_size, const float32& gamma, const vector<pair<int, int>>& filter_pixels, float32* disparity_map)
 {
