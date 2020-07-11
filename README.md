@@ -55,7 +55,8 @@ opencv310
 
 ## 备注
 <b>算法优点</b>：效果好，内存占用低
-<br><b>算法缺点</b>：效率低，速度比较慢，不建议跑大图，建议先跑个小图看看效果
+<br><b>算法缺点</b>：效率低，速度比较慢，不建议跑大图，建议先跑个小图看看效果。如果设置为前端平行窗口（PatchMatchStereo为倾斜窗口时效果最好），则速度会更快，如下：
+>pms_option.is_fource_fpw = true;
 
 ## 论文
 Bleyer M, Rhemann C, Rother C. <b>PatchMatch Stereo-Stereo Matching with Slanted Support Windows</b>[C]. British Machine Vision Conference 2011. 2011.
