@@ -53,6 +53,13 @@ opencv310
 <img src="https://github.com/ethan-li-coding/PatchMatchStereo/blob/master/doc/exp/%E4%BB%A3%E7%A0%81%E6%A1%86%E6%9E%B6.png" width=60%>
 </div>
 
+## 备注
+<b>算法优点</b>：效果好，内存占用低
+<br><b>算法缺点</b>：效率低，速度比较慢，不建议跑大图，建议先跑个小图看看效果
+
+## 论文
+Bleyer M, Rhemann C, Rother C. <b>PatchMatch Stereo-Stereo Matching with Slanted Support Windows</b>[C]. British Machine Vision Conference 2011. 2011.
+
 ## Github图片不显示的解决办法
 修改hosts
 
