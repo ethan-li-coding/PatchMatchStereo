@@ -11,6 +11,16 @@
 
 #define COST_PUNISH 120.0f  // NOLINT(cppcoreguidelines-macro-usage)
 
+#define USE_FAST_EXP
+/* 快速exp*/
+inline double fast_exp(double x) {
+	x = 1.0 + x / 1024;
+	x *= x; x *= x; x *= x; x *= x;
+	x *= x; x *= x; x *= x; x *= x;
+	x *= x; x *= x;
+	return x;
+}
+
 /**
  * \brief 代价计算器基类
  */
@@ -194,7 +204,11 @@ public:
 				// 计算权值
 				const auto& col_q = GetColor(img_left_, xc, yr);
 				const auto dc = abs(col_p.r - col_q.r) + abs(col_p.g - col_q.g) + abs(col_p.b - col_q.b);
+#ifdef USE_FAST_EXP
+				const auto w = fast_exp(double(-dc / gamma_));
+#else
 				const auto w = exp(-dc / gamma_);
+#endif
 
 				// 聚合代价
 				const auto grad_q = GetGradient(grad_left_, xc, yr);
@@ -226,11 +240,6 @@ public:
 	*/
 	inline PVector3f GetColor(const uint8* img_data, const float32& x,const sint32& y) const
 	{
-		if (x == floor(x)) {
-			auto* pixel = img_data + y * width_ * 3 + 3 * sint32(x);
-			return { pixel[0], pixel[1], pixel[2] };
-		}
-
 		float32 col[3];
 		const auto x1 = static_cast<sint32>(x);
 		const sint32 x2 = x1 + 1;
@@ -266,11 +275,6 @@ public:
 	*/
 	inline PVector2f GetGradient(const PGradient* grad_data, const float32& x, const sint32& y) const
 	{
-		if (x == floor(x)) {
-			const auto& grad = grad_data[y * width_ + sint32(x)];
-			return { grad.x, grad.y };
-		}
-
 		const auto x1 = static_cast<sint32>(x);
 		const sint32 x2 = x1 + 1;
 		const float32 ofs = x - x1;

@@ -42,4 +42,5 @@ namespace pms_util
 	 * \param disparity_map ÊÓ²îÍ¼
 	 */
 	void WeightedMedianFilter(const uint8* img_data, const sint32& width, const sint32& height, const sint32& wnd_size, const float32& gamma,const vector<pair<int, int>>& filter_pixels, float32* disparity_map);
+
 }
