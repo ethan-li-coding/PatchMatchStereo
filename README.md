@@ -25,6 +25,7 @@ PatchMatchStereo双目立体匹配算法完整实现，代码规范，注释丰�
 # CSDN博客
 [【码上实战】【立体匹配系列】经典PatchMatch: （1）框架](https://ethanli.blog.csdn.net/article/details/107192399)
 <br>[【码上实战】【立体匹配系列】经典PatchMatch: （2）主类](https://blog.csdn.net/rs_lys/article/details/107251788)
+<br>[【码上实战】【立体匹配系列】经典PatchMatch: （3）随机初始化](https://blog.csdn.net/rs_lys/article/details/107271430)
 
 # 环境
 windows10 / visual studio 2015&2019
