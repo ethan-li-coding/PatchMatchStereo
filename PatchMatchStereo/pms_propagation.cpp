@@ -77,7 +77,9 @@ void PMSPropagation::DoPropagation()
 			SpatialPropagation(x, y, dir);
 
 			// 平面优化
-			PlaneRefine(x, y);
+			if (!option_.is_fource_fpw) {
+				PlaneRefine(x, y);
+			}
 
 			// 视图传播
 			ViewPropagation(x, y);
