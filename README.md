@@ -28,7 +28,7 @@ PatchMatchStereo双目立体匹配算法完整实现，代码规范，注释丰�
 
 # 环境
 windows10 / visual studio 2015&2019
-代码基本没有使用系统api，你可以非常方便的移植到linux，可能需要做极少量的修改
+<br>代码基本没有使用系统api，你可以非常方便的移植到linux，可能需要做极少量的修改
 
 # 第三方库
 opencv310
