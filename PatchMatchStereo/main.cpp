@@ -102,7 +102,11 @@ int main(int argv, char** argc)
 	// 视差图填充
 	pms_option.is_fill_holes = true;
 
+	// 前端平行窗口
 	pms_option.is_fource_fpw = false;
+
+	// 整数视差精度
+	pms_option.is_integer_disp = true;
 
 	// 定义PMS匹配类实例
 	PatchMatchStereo pms;
