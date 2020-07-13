@@ -106,7 +106,7 @@ int main(int argv, char** argc)
 	pms_option.is_fource_fpw = false;
 
 	// 整数视差精度
-	pms_option.is_integer_disp = true;
+	pms_option.is_integer_disp = false;
 
 	// 定义PMS匹配类实例
 	PatchMatchStereo pms;
