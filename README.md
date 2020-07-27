@@ -23,13 +23,18 @@ PatchMatchStereo双目立体匹配算法完整实现，代码规范，注释丰�
 <table>
   
 # CSDN博客
-[【码上实战】【立体匹配系列】经典PatchMatch: （1）框架](https://ethanli.blog.csdn.net/article/details/107192399)
+如果你想了解更多代码讲解，下面的博客或许能帮到你：
+<br>[【码上实战】【立体匹配系列】经典PatchMatch: （1）框架](https://ethanli.blog.csdn.net/article/details/107192399)
 <br>[【码上实战】【立体匹配系列】经典PatchMatch: （2）主类](https://blog.csdn.net/rs_lys/article/details/107251788)
 <br>[【码上实战】【立体匹配系列】经典PatchMatch: （3）随机初始化](https://blog.csdn.net/rs_lys/article/details/107271430)
+<br>[【码上实战】【立体匹配系列】经典PatchMatch: （4）代价计算](https://ethanli.blog.csdn.net/article/details/107418804)
+<br>[【码上实战】【立体匹配系列】经典PatchMatch: （5）迭代传播](https://ethanli.blog.csdn.net/article/details/107436340)
+<br>[【码上实战】【立体匹配系列】经典PatchMatch: （6）后处理](https://ethanli.blog.csdn.net/article/details/107549278)
 
 # 环境
 windows10 / visual studio 2015&2019
 <br>代码基本没有使用系统api，你可以非常方便的移植到linux，可能需要做极少量的修改
+<br><br><b>强烈建议你使用release模式运行代码，强烈不建议使用debug模式运行代码</b>
 
 # 第三方库
 opencv310
