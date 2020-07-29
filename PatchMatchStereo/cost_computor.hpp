@@ -136,7 +136,7 @@ public:
 		// —’…´ø’º‰æ‡¿Î
 		const auto col_p = GetColor(img_left_, x, y);
 		const auto col_q = GetColor(img_right_, xr, y);
-		const auto dc = std::min(abs(col_p.r - col_q.x) + abs(col_p.r - col_q.y) + abs(col_p.r - col_q.z), tau_col_);
+		const auto dc = std::min(abs(col_p.b - col_q.x) + abs(col_p.g - col_q.y) + abs(col_p.r - col_q.z), tau_col_);
 
 		// Ã›∂»ø’º‰æ‡¿Î
 		const auto grad_p = GetGradient(grad_left_, x, y);
