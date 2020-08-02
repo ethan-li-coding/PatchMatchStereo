@@ -1,4 +1,4 @@
-/* -*-c++-*- SemiGlobalMatching - Copyright (C) 2020.
+/* -*-c++-*- PatchMatchStereo - Copyright (C) 2020.
 * Author	: Ethan Li <ethan.li.whu@gmail.com>
 *			  https://github.com/ethan-li-coding
 * Describe	: main
@@ -127,7 +127,8 @@ int main(int argv, char** argc)
 	start = std::chrono::steady_clock::now();
 	//¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
 	// Æ¥Åä
-	auto disparity = new float32[uint32(width * height)]();
+	// disparityÊý×é±£´æ×ÓÏñËØµÄÊÓ²î½á¹û
+	auto disparity = new float32[uint32(width * height)]();		
 	if (!pms.Match(bytes_left, bytes_right, disparity)) {
 		std::cout << "PMSÆ¥ÅäÊ§°Ü£¡" << std::endl;
 		return -2;

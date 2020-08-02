@@ -1,4 +1,4 @@
-/* -*-c++-*- SemiGlobalMatching - Copyright (C) 2020.
+/* -*-c++-*- PatchMatchStereo - Copyright (C) 2020.
 * Author	: Ethan Li <ethan.li.whu@gmail.com>
 *			  https://github.com/ethan-li-coding
 * Describe	: implement of pms_util

@@ -1,4 +1,4 @@
-/* -*-c++-*- SemiGlobalMatching - Copyright (C) 2020.
+/* -*-c++-*- PatchMatchStereo - Copyright (C) 2020.
 * Author	: Ethan Li <ethan.li.whu@gmail.com>
 *			  https://github.com/ethan-li-coding
 * Describe	: implement of cost computer
@@ -121,7 +121,7 @@ public:
 	}
 
 	/**
-	 * \brief 计算左影像p点视差为d时的代价值，未做边界判定
+	 * \brief 计算左影像p点视差为d时的代价值
 	 * \param x		p点x坐标
 	 * \param y		p点y坐标
 	 * \param d		视差值
@@ -148,7 +148,7 @@ public:
 	}
 
 	/**
-	 * \brief 计算左影像p点视差为d时的代价值，未做边界判定
+	 * \brief 计算左影像p点视差为d时的代价值
 	 * \param col_p		p点颜色值
 	 * \param grad_p	p点梯度值
 	 * \param x			p点x坐标
