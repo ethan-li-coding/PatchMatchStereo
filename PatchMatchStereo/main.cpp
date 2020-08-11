@@ -80,7 +80,7 @@ int main(int argv, char** argc)
 
 	// PMS匹配参数设计
 	PMSOption pms_option;
-	// 聚合路径数
+	// patch大小
 	pms_option.patch_size = 35;
 	// 候选视差范围
 	pms_option.min_disparity = argv < 4 ? 0 : atoi(argc[3]);
