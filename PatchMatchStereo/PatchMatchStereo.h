@@ -22,7 +22,7 @@ public:
 	* \brief 类的初始化，完成一些内存的预分配、参数的预设置等
 	* \param width		输入，核线像对影像宽
 	* \param height		输入，核线像对影像高
-	* \param option		输入，PatchMatchStereo参数
+	* \param option		输入，算法参数
 	*/
 	bool Initialize(const sint32& width, const sint32& height, const PMSOption& option);
 
@@ -38,7 +38,7 @@ public:
 	* \brief 重设
 	* \param width		输入，核线像对影像宽
 	* \param height		输入，核线像对影像高
-	* \param option		输入，SemiGlobalMatching参数
+	* \param option		输入，算法参数
 	*/
 	bool Reset(const uint32& width, const uint32& height, const PMSOption& option);
 
