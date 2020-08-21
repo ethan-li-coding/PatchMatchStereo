@@ -35,9 +35,7 @@ void pms_util::MedianFilter(const float32* in, float32* out, const sint32& width
 					const sint32 row = y + r;
 					const sint32 col = x + c;
 					if (row >= 0 && row < height && col >= 0 && col < width) {
-						if (in[row * width + col] != Invalid_Float) {
-							wnd_data.push_back(in[row * width + col]);
-						}
+						wnd_data.push_back(in[row * width + col]);
 					}
 				}
 			}
@@ -92,7 +90,7 @@ void pms_util::WeightedMedianFilter(const uint8* img_data, const sint32& width, 
 		}
 
 		// --- 取加权中值
-		// 按value排序
+		// 按视差值排序
 		std::sort(disps.begin(), disps.end());
 		const float32 median_w = total_w / 2;
 		float32 w = 0.0f;
