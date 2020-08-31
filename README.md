@@ -1,5 +1,5 @@
 # PatchMatchStereo
-PatchMatchStereo双目立体匹配算法完整实现，代码规范，注释丰富且清晰，CSDN同步教学，欢迎star!
+PatchMatch，倾斜窗口经典，效果极佳，OpenMVS&Colmap稠密匹配算法。完整实现，代码规范，注释清晰，博客教学，欢迎star！
 
 <table>
     <tr>
