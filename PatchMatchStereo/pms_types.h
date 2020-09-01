@@ -1,5 +1,5 @@
 /* -*-c++-*- PatchMatchStereo - Copyright (C) 2020.
-* Author	: Ethan Li <ethan.li.whu@gmail.com>
+* Author	: Yingsong Li(Ethan Li) <ethan.li.whu@gmail.com>
 *			  https://github.com/ethan-li-coding
 * Describe	: header of pms_types
 */

@@ -1,5 +1,5 @@
 /* -*-c++-*- PatchMatchStereo - Copyright (C) 2020.
-* Author	: Ethan Li <ethan.li.whu@gmail.com>
+* Author	: Yingsong Li(Ethan Li) <ethan.li.whu@gmail.com>
 *			  https://github.com/ethan-li-coding
 * Describe	: main
 */
@@ -256,18 +256,28 @@ void SaveDisparityMap(const float32* disp_map, const sint32& width, const sint32
 
 void SaveDisparityCloud(const uint8* img_bytes, const float32* disp_map, const sint32& width, const sint32& height, const std::string& path)
 {
-	// 保存视差点云(x,y,disp,r,g,b)
+	float32 B = 193.001;		// 基线
+	float32 f = 999.421;		// 焦距
+	float32 x0l = 294.182;		// 左视图像主点x0
+	float32 y0l = 252.932;		// 左视图像主点y0
+	float32 x0r = 326.95975;	// 右视图像主点x0
+
+
+	// 保存点云
 	FILE* fp_disp_cloud = nullptr;
 	fopen_s(&fp_disp_cloud, (path + "-cloud.txt").c_str(), "w");
 	if (fp_disp_cloud) {
-		for (sint32 i = 0; i < height; i++) {
-			for (sint32 j = 0; j < width; j++) {
-				const float32 disp = abs(disp_map[i * width + j]);
+		for (sint32 y = 0; y < height; y++) {
+			for (sint32 x = 0; x < width; x++) {
+				const float32 disp = abs(disp_map[y * width + x]);
 				if (disp == Invalid_Float) {
 					continue;
 				}
-				fprintf_s(fp_disp_cloud, "%f %f %f %d %d %d\n", float32(j), float32(i),
-					disp, img_bytes[i * width * 3 + 3 * j + 2], img_bytes[i * width * 3 + 3 * j + 1], img_bytes[i * width * 3 + 3 * j]);
+				float32 Z = B * f / (disp + (x0r - x0l));
+				float32 X = Z * (x - x0l) / f;
+				float32 Y = Z * (y - y0l) / f;
+				fprintf_s(fp_disp_cloud, "%f %f %f %d %d %d\n", X, Y,
+					Z, img_bytes[y * width * 3 + 3 * x + 2], img_bytes[y * width * 3 + 3 * x + 1], img_bytes[y * width * 3 + 3 * x]);
 			}
 		}
 		fclose(fp_disp_cloud);
