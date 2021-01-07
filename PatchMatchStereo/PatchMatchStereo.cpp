@@ -257,6 +257,8 @@ void PatchMatchStereo::ComputeGradient() const
 					(-gray[(y + 1) * width + x - 1] + gray[(y + 1) * width + x + 1]);
 				const auto grad_y = (-gray[(y - 1) * width + x - 1] - 2 * gray[(y - 1) * width + x] - gray[(y - 1) * width + x + 1]) +
 					(gray[(y + 1) * width + x - 1] + 2 * gray[(y + 1) * width + x] + gray[(y + 1) * width + x + 1]);
+
+				// 这里除以8是为了让梯度的最大值不超过255，这样计算代价时梯度差和颜色差位于同一个尺度
 				grad[y * width + x].x = grad_x / 8;
 				grad[y * width + x].y = grad_y / 8;
 			}
