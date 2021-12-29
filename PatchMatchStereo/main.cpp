@@ -23,7 +23,7 @@ void ShowDisparityMap(const float32* disp_map, const sint32& width, const sint32
 /*保存视差图*/
 void SaveDisparityMap(const float32* disp_map, const sint32& width, const sint32& height, const std::string& path);
 /*保存视差点云*/
-void SaveDisparityCloud(const uint8* img_bytes, const float32* disp_map, const sint32& width, const sint32& height, const std::string& path);
+void SavePointCloud(const uint8* img_bytes, const float32* disp_map, const sint32& width, const sint32& height, const std::string& path);
 
 /**
 * \brief
@@ -100,7 +100,7 @@ int main(int argv, char** argc)
 	pms_option.is_check_lr = true;
 	pms_option.lrcheck_thres = 1.0f;
 	// 视差图填充
-	pms_option.is_fill_holes = true;
+	pms_option.is_fill_holes = false;
 
 	// 前端平行窗口
 	pms_option.is_fource_fpw = false;
@@ -170,9 +170,9 @@ int main(int argv, char** argc)
 	// 保存视差图
 	SaveDisparityMap(pms.GetDisparityMap(0), width, height, path_left);
 	SaveDisparityMap(pms.GetDisparityMap(1), width, height, path_right);
-	// 保存视差点云
-	SaveDisparityCloud(bytes_left, pms.GetDisparityMap(0), width, height, path_left);
-	SaveDisparityCloud(bytes_right, pms.GetDisparityMap(1), width, height, path_left);
+	// 保存点云
+	SavePointCloud(bytes_left, pms.GetDisparityMap(0), width, height, path_left);
+	SavePointCloud(bytes_right, pms.GetDisparityMap(1), width, height, path_left);
 
 	cv::waitKey(0);
 
@@ -254,8 +254,9 @@ void SaveDisparityMap(const float32* disp_map, const sint32& width, const sint32
 	cv::imwrite(path + "-c.png", disp_color);
 }
 
-void SaveDisparityCloud(const uint8* img_bytes, const float32* disp_map, const sint32& width, const sint32& height, const std::string& path)
+void SavePointCloud(const uint8* img_bytes, const float32* disp_map, const sint32& width, const sint32& height, const std::string& path)
 {
+	// 请注意，不同数据，参数不一样，请修改下列参数值
 	float32 B = 193.001;		// 基线
 	float32 f = 999.421;		// 焦距
 	float32 x0l = 294.182;		// 左视图像主点x0
@@ -276,6 +277,7 @@ void SaveDisparityCloud(const uint8* img_bytes, const float32* disp_map, const s
 				float32 Z = B * f / (disp + (x0r - x0l));
 				float32 X = Z * (x - x0l) / f;
 				float32 Y = Z * (y - y0l) / f;
+				// X Y Z R G B
 				fprintf_s(fp_disp_cloud, "%f %f %f %d %d %d\n", X, Y,
 					Z, img_bytes[y * width * 3 + 3 * x + 2], img_bytes[y * width * 3 + 3 * x + 1], img_bytes[y * width * 3 + 3 * x]);
 			}
