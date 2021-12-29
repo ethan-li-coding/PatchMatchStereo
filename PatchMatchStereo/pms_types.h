@@ -235,7 +235,7 @@ struct DisparityPlane {
 	 * \brief 将视差平面转换到另一视图
 	 * 假设左视图平面方程为 d = a_p*xl + b_p*yl + c_p
 	 * 左右视图满足：(1) xr = xl - d_p; (2) yr = yl; (3) 视差符号相反(本代码左视差为正值，右视差为负值)
-	 * 代入左视图视差平面方程就可得到右视图坐标系下的平面方程: d = -a_p*xr - b_p*yr - (c_p+a_p*d_p)
+	 * 代入左视图视差平面方程就可得到右视图坐标系下的平面方程: d = a_p/(a_p-1)*xr + b_p/(a_p-1)*yr + c_p/(a_p-1)
 	 * 右至左同理
 	 * \param x		像素x坐标
 	 * \param y 	像素y坐标
@@ -243,8 +243,8 @@ struct DisparityPlane {
 	 */
 	DisparityPlane to_another_view(const sint32& x, const sint32& y) const
 	{
-		const float32 d = to_disparity(x, y);
-		return { -p.x, -p.y, -p.z - p.x * d };
+		float denom = 1 / (p.x - 1.f);
+		return { p.x * denom, p.y * denom, p.z * denom };
 	}
 
 	// operator ==
